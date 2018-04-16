@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		    	String gameData;
 		SmartDashboard.putString("DB/String 5", "In Autonomous");
-		//NEED THIS BACK, HARD CODEDFOR TESTING
+		//NEED THIS BACK, HARD CODE FOR TESTING
 		//gameData = DriverStation.getInstance().getGameSpecificMessage();
 		gameData = "LLR";
 		SmartDashboard.putString("DB/String 6", "GameData " + gameData.charAt(0));
