@@ -110,8 +110,9 @@ public class Robot extends IterativeRobot {
 			//Put left auto code here when switch is on left side of owned (close) switch
 			if (autonomousStartLocationValue == 1) {
 				// Owned switch left side, starting position left side
-				// Robot needs to drive straight, turn right towards switch, drop cube in switch, back up, turn left, drive out of way 
-				if (timer.get() <= 1.0) {
+				// Robot needs to drive straight, turn right towards switch, drop cube in switch, back up, turn left, drive out of way
+				Autonomas.leftOwnLeftSide();
+				/*if (timer.get() <= 1.0) {
 					chassis.arcadeDrive(-1.0, 0.0); // drive 50% fwd 0% turn
 				}
 				if (timer.get() > 1.25 && timer.get() < 2.0) {
@@ -122,13 +123,14 @@ public class Robot extends IterativeRobot {
 				}
 				if (timer.get() > 2.6 && timer.get() < 2.8) {
 					pneumatics.reverseSolenoid();
-				}
+				}*/
 			}	
 			else if (autonomousStartLocationValue == 2) {
 				// Owned switch left side, starting position center
 				// Robot needs to drive straight, turn left, drive straight past switch, turn right, drive straight past line, 
 				// turn right drive straight towards switch, turn right, drop cube in switch 
-				if (timer.get() <= .75) {
+				Autonomas.leftOwnMiddle();
+				/*if (timer.get() <= .75) {
 					chassis.arcadeDrive(0.65,0.0);
 				}
 				if (timer.get() > .75 && timer.get() < 1.25) {
@@ -148,12 +150,13 @@ public class Robot extends IterativeRobot {
 				}
 				if (timer.get() > 3.5 && timer.get() < 3.7) {
 					pneumatics.reverseSolenoid();
-				}
+				}*/
 			}
 			else if (autonomousStartLocationValue == 3) {
 				// Owned switch left side, starting position right side
 				// Drive straight past switch, turn left, drive to left side of switch, turn left, drop cube
-				if (timer.get() <= 1.0) {
+				Autonomas.leftOwnRightSide();
+				/*if (timer.get() <= 1.0) {
 					chassis.arcadeDrive(-1.0, 0.0); // drive 50% fwd 0% turn
 				}
 				if (timer.get() > 1.25 && timer.get() < 2.0) {
@@ -165,6 +168,7 @@ public class Robot extends IterativeRobot {
 				if (timer.get() > 2.6 && timer.get() < 2.8) {
 					pneumatics.reverseSolenoid();
 				}
+				*/
 			}
 			
 			else {
@@ -181,7 +185,8 @@ public class Robot extends IterativeRobot {
 		} else {
 			//Put right auto code here when SWITCH is on right side of owned (close) switch
 			if (autonomousStartLocationValue == 1) {
-				for (int i = 0; i < 4; i++)
+				Autonomas.rightOwnLeftSide();
+				/*for (int i = 0; i < 4; i++)
 				{
 					// Owned switch right side, starting position left side
 					// Drive straight past switch, turn right, drive to right side of switch, turn right, drop cube
@@ -189,7 +194,7 @@ public class Robot extends IterativeRobot {
 					Timer.delay(2.0); // wait 2 seconds
 					chassis.arcadeDrive(0.0, 0.25); // drive 0% fwd, 25% turn
 				}
-				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
+				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn*/
 			}
 			else if (autonomousStartLocationValue == 2) {
 				for (int i = 0; i < 4; i++)
@@ -197,24 +202,29 @@ public class Robot extends IterativeRobot {
 					// Owned switch right side, starting position middle side
 					// Robot needs to drive straight, turn right, drive straight past switch, turn left, drive straight past line, 
 					// turn left drive straight towards switch, turn left, drop cube in switch 
-					
+				
+					Autonomas.rightOwnMiddle();
+					/*
 					chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
 					Timer.delay(2.0); // wait 2 seconds
 					chassis.arcadeDrive(0.0, 0.15); // drive 0% fwd, 15% turn
 				}
 				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
+				*/
 			}
 			else if (autonomousStartLocationValue == 3) {
+				Autonomas.rightOwnRightSide();
+				/*
 				for (int i = 0; i < 4; i++)
 				{
 					// Owned switch right side, starting position right side
 					// Robot needs to drive straight, turn left towards switch, drop cube in switch, back up, turn right, drive out of way
-
 					chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
 					Timer.delay(2.0); // wait 2 seconds
 					chassis.arcadeDrive(0.0, 0.75); // drive 0% fwd, 75% turn
 				}
 				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
+				*/
 			}
 			else {
 				//ERROR Condition, a Start position was not Selected
@@ -226,6 +236,7 @@ public class Robot extends IterativeRobot {
 			}
 		}
 		SmartDashboard.putString("DB/String 7", "timer" + timer.get());
+		*
 	} 
 
 	public void teleopPeriodic() {

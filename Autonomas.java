@@ -99,15 +99,19 @@ public class Autonomas {
 		}
 		chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
 	}
-	public void noneSelected(){
+	public void rightOwnMiddle(){
 		//ERROR Condition, a Start position was not Selected
 		//Attempt to drive straight and pass the switch only
-		if (timer.get() <= 1.5) {
-			chassis.arcadeDrive(-1.0, 0.0); 
+		for (int i = 0; i < 4; i++)
+		{
+			// Owned switch right side, starting position right side
+			// Robot needs to drive straight, turn left towards switch, drop cube in switch, back up, turn right, drive out of way
+
+			chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
+			Timer.delay(2.0); // wait 2 seconds
+			chassis.arcadeDrive(0.0, 0.75); // drive 0% fwd, 75% turn
 		}
-		if (timer.get() > 1.75 && timer.get() < 2.5) {
-			chassis.arcadeDrive(0.0,0.65);
-		}
+		chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
 	}
 
 
