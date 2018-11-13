@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//Test
+
 public class Arm extends IterativeRobot {
 	WPI_TalonSRX _armMoter = new WPI_TalonSRX(2);
 	private Joystick stick;
