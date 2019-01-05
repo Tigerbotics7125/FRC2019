@@ -239,12 +239,13 @@ public class Robot extends IterativeRobot {
 		//Pneumatic Control for Arm to Open and Close
 		if (stick.getRawButton(2)) {
 			pneumatics.forwardSolenoid();
-		}
-		else if (stick.getRawButton(3)){
+			Timer.delay(1.0); //wait one sec
 			pneumatics.reverseSolenoid();
 		}
 		else {
 			pneumatics.disableSolenoid();
+			
+			
 		}
 
 	}
