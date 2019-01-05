@@ -185,56 +185,7 @@ public class Robot extends IterativeRobot {
 			}
 			
 		} else {
-			//Put right auto code here when SWITCH is on right side of owned (close) switch
-			if (autonomousStartLocationValue == 1) {
-				Autonomas.rightOwnLeftSide();
-				/*for (int i = 0; i < 4; i++)
-				{
-					// Owned switch right side, starting position left side
-					// Drive straight past switch, turn right, drive to right side of switch, turn right, drop cube
-					chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
-					Timer.delay(2.0); // wait 2 seconds
-					chassis.arcadeDrive(0.0, 0.25); // drive 0% fwd, 25% turn
-				}
-				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn*/
-			}
-			else if (autonomousStartLocationValue == 2) {
-				for (int i = 0; i < 4; i++)
-				{
-					// Owned switch right side, starting position middle side
-					// Robot needs to drive straight, turn right, drive straight past switch, turn left, drive straight past line, 
-					// turn left drive straight towards switch, turn left, drop cube in switch 
-				
-					Autonomas.rightOwnMiddle();
-					/*
-					chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
-					Timer.delay(2.0); // wait 2 seconds
-					chassis.arcadeDrive(0.0, 0.15); // drive 0% fwd, 15% turn
-				}
-				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
-				*/
-			}
-			else if (autonomousStartLocationValue == 3) {
-				Autonomas.rightOwnRightSide();
-				/*
-				for (int i = 0; i < 4; i++)
-				{
-					// Owned switch right side, starting position right side
-					// Robot needs to drive straight, turn left towards switch, drop cube in switch, back up, turn right, drive out of way
-					chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
-					Timer.delay(2.0); // wait 2 seconds
-					chassis.arcadeDrive(0.0, 0.75); // drive 0% fwd, 75% turn
-				}
-				chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
-				*/
-			}
-			else {
-				//ERROR Condition, a Start position was not Selected
-				//Attempt to drive straight and pass the switch only
-				chassis.arcadeDrive(0.5, 0.0); // drive 50% fwd 0% turn
-				//Timer.delay(1.0); // wait 2 seconds
-				//chassis.arcadeDrive(0.0, 0.75); // drive 0% fwd, 75% turn
-				//chassis.arcadeDrive(0.0, 0.0); // drive 0% forward, 0% turn
+			// put code here for owning of switches or game field locations
 			}
 		}
 		SmartDashboard.putString("DB/String 7", "timer" + timer.get());

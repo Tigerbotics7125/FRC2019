@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbV0 {
-	
+	//We have to decide what we are going to use to climb before we use this...
 	public void climb(){
 		
 	}

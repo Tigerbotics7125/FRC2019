@@ -23,12 +23,8 @@ public class Autonomas {
 		if (timer.get() > 1.25 && timer.get() < 2.0) {
 			chassis.arcadeDrive(0.0,0.65);
 		}
-		if (timer.get() > 2.25 && timer.get() < 2.45 && !(limitUp.get()) && !(limitDown.get())) {
-			armMotor.setSpeed(0.375);
-		}
-		if (timer.get() > 2.6 && timer.get() < 2.8) {
-			pneumatics.reverseSolenoid();
-		}
+		
+		
 	}
 	public void leftOwnMiddle(){
 		if (timer.get() <= .75) {
