@@ -16,10 +16,23 @@ public class Autonomas {
 		//if(gameData.charAt(0) == 'L')
 		
 	}
-	public void fixThisNameLaterKaylee(){
-		
-		
+	public void bottomStopper(){	
 		
 	}
+public void bottomBall(){	
+		
+	}
+public void middleStopper(){	
+	
+}
+public void middleBall(){	
+	
+}
+public void topStopper(){	
+	
+}
+public void topBall(){	
+	
+}
 
 }
