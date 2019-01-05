@@ -14,14 +14,14 @@ public class Arm extends IterativeRobot {
 	public void rotateUp(){
 		stick = new Joystick(4);
 		if (stick.getRawButton(4)){
-			
+			armMotor.setSpeed(0.3);
 		}
 
 	}
 	public void rotateDown(){
 		stick = new Joystick(5);
 		if (stick.getRawButton(5)){
-			
+			armMotor.setSpeed(-0.375);
 		}
 	}
 

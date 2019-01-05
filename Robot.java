@@ -227,10 +227,10 @@ public class Robot extends IterativeRobot {
 		
 		//Arm Control Up and Down
 		if(stick.getRawButton(1)/*&& (limitUp.get())*//* && (limitDown.get())*/) {
-			armMotor.setSpeed(0.3);
+			Arm.rotateUp();
 		}
 		else if(stick.getRawButton(4)/*&& (limitDown.get())*/ /*&& (limitDown.get())*/) {
-			armMotor.setSpeed(-0.375);
+			Arm.rotateDown();
 		}
 		else {
 			armMotor.setSpeed(0);
