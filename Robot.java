@@ -236,7 +236,7 @@ public class Robot extends IterativeRobot {
 			armMotor.setSpeed(0);
 		}
 			
-		//Pneumatic Control for Arm to Open and Close
+		//Pneumatic Control for velcro to cut
 		if (stick.getRawButton(2)) {
 			pneumatics.forwardSolenoid();
 			Timer.delay(1.0); //wait one sec
