@@ -212,9 +212,9 @@ public class Robot extends IterativeRobot {
 		}
 		
 		//Drive Modes
-		if (driveModeValue) {
+		/*if (driveModeValue) {
 			chassis.tankDrive(tankleft,tankright);
-		} 
+		} */
 		else {
 			chassis.arcadeDrive(arcadeleft, arcaderight);
 		}
