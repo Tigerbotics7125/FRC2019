@@ -16,9 +16,7 @@ public class Autonomas {
 		//if(gameData.charAt(0) == 'L')
 		
 	}
-public void autoSandstorm(){	
-		
-	}
+
 	public void bottomStopper(){	
 		
 	}
