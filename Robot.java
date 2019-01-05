@@ -194,9 +194,9 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		//Variable Initialization
-		double tankright = stick.getY()*1;
+		/*double tankright = stick.getY()*1;
 		double tankZ = stick.getZ()*1;
-		double tankleft = stick.getRawAxis(3)*1;
+		double tankleft = stick.getRawAxis(3)*1; */
 		double arcadeleft = stick.getY() *1;
 		double arcaderight = stick.getX()*1;
 		
