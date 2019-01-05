@@ -5,35 +5,41 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Autonomas {
-	
+
 	private DifferentialDrive chassis;
 
 
 	public Autonomas() {
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		
+
 		//if(gameData.charAt(0) == 'L')
-		
+
 	}
 
 	public void bottomStopper(){	
-		
+		pneumatics.forwardSolenoid();
+		Timer.delay(1.0); //wait one sec
+		pneumatics.reverseSolenoid(); 
 	}
-public void bottomBall(){	
-		
+	public void bottomBall(){	
+
 	}
-public void middleStopper(){	
-	
-}
-public void middleBall(){	
-	
-}
-public void topStopper(){	
-	
-}
-public void topBall(){	
-	
-}
+	public void middleStopper(){	
+		pneumatics.forwardSolenoid();
+		Timer.delay(1.0); //wait one sec
+		pneumatics.reverseSolenoid(); 
+	}
+	public void middleBall(){	
+
+	}
+	public void topStopper(){	
+		pneumatics.forwardSolenoid();
+		Timer.delay(1.0); //wait one sec
+		pneumatics.reverseSolenoid(); 
+	}
+	public void topBall(){	
+
+	}
 
 }
