@@ -240,7 +240,7 @@ public class Robot extends IterativeRobot {
 		if (stick.getRawButton(2)) {
 			pneumatics.forwardSolenoid();
 			Timer.delay(1.0); //wait one sec
-			pneumatics.reverseSolenoid();
+			pneumatics.reverseSolenoid(); 
 		}
 		else {
 			pneumatics.disableSolenoid();
