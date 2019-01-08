@@ -235,6 +235,7 @@ public class Robot extends IterativeRobot {
 		else {
 			armMotor.setSpeed(0);
 		}
+
 			
 		//Pneumatic Control for velcro to cut
 		if (stick.getRawButton(2)) {
@@ -247,6 +248,7 @@ public class Robot extends IterativeRobot {
 			
 			
 		}
+
 
 	}
 

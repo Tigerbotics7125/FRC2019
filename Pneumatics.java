@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Pneumatics {
-	
+	//Delete if not being used later for orginization pls
 
 	private boolean enabled;
 	private boolean pressureSwitch;
