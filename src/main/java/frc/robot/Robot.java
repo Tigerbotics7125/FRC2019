@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private WPI_VictorSPX leftMotor;
   private WPI_VictorSPX rightMotor;
+  
   private DifferentialDrive chassis;
   private Joystick joyCon;
   private Spark intake;
