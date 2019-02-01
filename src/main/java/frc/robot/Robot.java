@@ -7,9 +7,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,7 +29,11 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+  private WPI_VictorSPX leftMotor;
+  private WPI_VictorSPX rightMotor;
+  private DifferentialDrive chassis;
+  private Joystick joyCon;
+  private Spark intake;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,6 +43,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    leftMotor=new WPI_VictorSPX(1);
+    rightMotor=new WPI_VictorSPX(2);
+    chassis=new DifferentialDrive(leftMotor, rightMotor);
+    joyCon=new Joystick(0);
+    intake=new Spark(0);
   }
 
   /**
@@ -86,6 +101,29 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+            /* get gamepad stick values */
+            double forw = -1 * joyCon.getRawAxis(1); /* positive is forward */
+            double turn = +1 * joyCon.getRawAxis(0); /* positive is right */
+            boolean btn1 = joyCon.getRawButton(1); /* is button is down, print joystick values */
+            //boolean btn2 = joyCon.getRawButton(0);
+            /* deadband gamepad 10% */
+            if (Math.abs(forw) < 0.10) {
+                forw = 0;
+            }
+            if (Math.abs(turn) < 0.10) {
+                turn = 0;
+            }
+            //speed
+            
+            Talon exampleTalon = new Talon(1);
+           
+    
+            /* drive robot */
+            chassis.arcadeDrive(forw, turn);
+            if(btn1)
+              intake.set(-.5);
+            else
+              intake.set(0);
   }
 
   /**
