@@ -117,7 +117,8 @@ public class Robot extends TimedRobot {
             }
             //speed
             
-            Talon exampleTalon = new Talon(1);
+            Talon talonOne = new Talon(3);
+            Talon talonTwo = new Talon(4);
            
     
             /* drive robot */
