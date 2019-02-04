@@ -119,6 +119,12 @@ public class Robot extends TimedRobot {
             
             Talon talonOne = new Talon(3);
             Talon talonTwo = new Talon(4);
+           talonOne.enableDeadbandElimination(true);
+           talonTwo.enableDeadbandElimination(true);
+           
+
+           talonOne.set(0.5);
+           talonTwo.set(-0.5);
            
     
             /* drive robot */
