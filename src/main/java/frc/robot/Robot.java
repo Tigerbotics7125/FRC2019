@@ -110,6 +110,7 @@ public class Robot extends TimedRobot {
             boolean btn3 = joyCon.getRawButton(3);
             //boolean btn2 = joyCon.getRawButton(0);
             /* deadband gamepad 10% */
+            startCompetition();
             if (Math.abs(forw) < 0.10) {
                 forw = 0;
             }
