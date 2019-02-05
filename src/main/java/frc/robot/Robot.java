@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
             /* get gamepad stick values */
             double forw = -1 * joyCon.getRawAxis(1); /* positive is forward */
             double turn = +1 * joyCon.getRawAxis(0); /* positive is right */
-            double armUp = +1 * joyCon.getRawAxis(5);
+            double armUp = +0.25 * joyCon.getRawAxis(5);
             boolean btn1 = joyCon.getRawButton(1); /* is button is down, print joystick values */
             boolean btn3 = joyCon.getRawButton(3);
             //boolean btn2 = joyCon.getRawButton(0);
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
   //          Talon talonTwo = new Talon(4);
            talonOne.enableDeadbandElimination(true);
            talonTwo.enableDeadbandElimination(true);
-           
+          
           //if (btn3){
            talonOne.set(armUp);
            talonTwo.set(-1*armUp);
