@@ -123,10 +123,15 @@ public class Robot extends TimedRobot {
            talonOne.enableDeadbandElimination(true);
            talonTwo.enableDeadbandElimination(true);
            
-          if (btn3)
+          if (btn3){
            talonOne.set(0.1);
            talonTwo.set(-0.1);
           }
+          else{
+            talonOne.set(0);
+           talonTwo.set(0);
+          }
+
     
             /* drive robot */
             chassis.arcadeDrive(forw, turn);
