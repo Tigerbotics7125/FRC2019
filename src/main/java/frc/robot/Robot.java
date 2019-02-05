@@ -32,7 +32,8 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private WPI_VictorSPX leftMotor;
   private WPI_VictorSPX rightMotor;
-  
+  private Talon talonOne;
+  private Talon talonTwo;
   private DifferentialDrive chassis;
   private Joystick joyCon;
   private Spark intake;
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     leftMotor=new WPI_VictorSPX(1);
     rightMotor=new WPI_VictorSPX(2);
+    talonOne=new Talon(3);
+    talonTwo=new Talon(4);
     chassis=new DifferentialDrive(leftMotor, rightMotor);
     joyCon=new Joystick(0);
     intake=new Spark(0);
@@ -106,11 +109,12 @@ public class Robot extends TimedRobot {
             /* get gamepad stick values */
             double forw = -1 * joyCon.getRawAxis(1); /* positive is forward */
             double turn = +1 * joyCon.getRawAxis(0); /* positive is right */
+            double armUp = +1 * joyCon.getRawAxis(5);
             boolean btn1 = joyCon.getRawButton(1); /* is button is down, print joystick values */
             boolean btn3 = joyCon.getRawButton(3);
             //boolean btn2 = joyCon.getRawButton(0);
             /* deadband gamepad 10% */
-            startCompetition();
+            //startCompetition();
             if (Math.abs(forw) < 0.10) {
                 forw = 0;
             }
@@ -119,19 +123,19 @@ public class Robot extends TimedRobot {
             }
             //speed
             
-            Talon talonOne = new Talon(3);
-            Talon talonTwo = new Talon(4);
+//            Talon talonOne = new Talon(3);
+  //          Talon talonTwo = new Talon(4);
            talonOne.enableDeadbandElimination(true);
            talonTwo.enableDeadbandElimination(true);
            
-          if (btn3){
-           talonOne.set(0.1);
-           talonTwo.set(-0.1);
-          }
+          //if (btn3){
+           talonOne.set(armUp);
+           talonTwo.set(-1*armUp);
+          /*}
           else{
             talonOne.set(0);
            talonTwo.set(0);
-          }
+          }*
 
     
             /* drive robot */
