@@ -249,7 +249,7 @@ public class Robot extends TimedRobot {
       else if (btn3)
         goal = 1000;
     }
-    if (limitUp.get()||limitDown.get()){
+    if (limitUp.get()&&limitDown.get()){
     talonOne.set(ControlMode.Position, goal);
     }
     if (++loop == 100) {
