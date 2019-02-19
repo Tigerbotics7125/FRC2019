@@ -204,7 +204,8 @@ public class Robot extends TimedRobot {
     boolean btn9 = joyCon.getRawButton(9);
     boolean btn10 = joyCon.getRawButton(10);
     boolean btn11 = joyCon.getRawButton(11);
-    boolean btn12 = joyCon.getRawButton(12);
+    boolean btn12 = joyCon.getRawButton(12); 
+    int arm = joyCon.getPOV();
     int goal = resting;// +skipOffset;
     /* deadband gamepad 10% */
     if (Math.abs(forw) < 0.10) {
@@ -223,6 +224,16 @@ public class Robot extends TimedRobot {
     if (!limitUp.get()||!limitDown.get()){
       talonOne.set(ControlMode.PercentOutput, 0);
     }
+    else if (arm == 0){
+      talonOne.set(ControlMode.PercentOutput, -.5);
+    }
+    else if (arm==180){
+      talonOne.set(ControlMode.PercentOutput, .5);
+    }
+    else {
+      talonOne.set(ControlMode.PercentOutput, 0);
+    }
+    /*
     else if (!limitUp.get()){//} || !limitDown.get()) {
       goal=talonOne.getSelectedSensorPosition()+4000;
     }
@@ -265,7 +276,7 @@ public class Robot extends TimedRobot {
         loop = 0;
       System.out.println(_sb);
     }
-
+*/
     /* drive robot */
     chassis.arcadeDrive(forw, turn);
     if (btn1)
