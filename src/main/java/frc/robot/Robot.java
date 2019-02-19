@@ -220,7 +220,10 @@ public class Robot extends TimedRobot {
       turn = 0;
     }
     //handle the arm lifting - check the limit switches first
-    if (!limitUp.get()){//} || !limitDown.get()) {
+    if (!limitUp.get()||!limitDown.get()){
+      talonOne.set(ControlMode.PercentOutput, 0);
+    }
+    else if (!limitUp.get()){//} || !limitDown.get()) {
       goal=talonOne.getSelectedSensorPosition()+4000;
     }
     else if (!limitDown.get()){
