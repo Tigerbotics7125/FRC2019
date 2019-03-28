@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   private WPI_VictorSPX leftMotor;
   private WPI_VictorSPX rightMotor;
   private TalonSRX talonOne;
-  // private Talon talonTwo;
+  private TalonSRX talonTwo;
   private DifferentialDrive chassis;
   private Joystick joyCon;
   private Spark intake;
@@ -55,9 +55,8 @@ public class Robot extends TimedRobot {
   private int lCargo;
   private int mCargo;
   private int hCargo;
-
+  private int goal;
   private boolean hitBottomFlag;
-  
 
   private DigitalInput limitUp;
   private DigitalInput limitDown;
@@ -68,8 +67,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    hitBottomFlag=false;
-    updatePositions(0);  
+    hitBottomFlag = false;
+    updatePositions(0);
+    goal = resting;
     CameraServer.getInstance().startAutomaticCapture();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -77,7 +77,9 @@ public class Robot extends TimedRobot {
     leftMotor = new WPI_VictorSPX(1);
     rightMotor = new WPI_VictorSPX(2);
     talonOne = new TalonSRX(3);
-
+    talonTwo = new TalonSRX(4);
+    talonTwo.set(ControlMode.Follower, talonOne.getDeviceID());
+    talonTwo.setInverted(true);
     talonOne.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
     talonOne.setSensorPhase(Constants.kSensorPhase);
@@ -139,6 +141,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    teleopInit();
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -149,6 +152,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    teleopPeriodic();
     switch (m_autoSelected) {
     case kCustomAuto:
       // Put custom auto code here
@@ -166,17 +170,14 @@ public class Robot extends TimedRobot {
     // Grab the 360 degree position of the MagEncoder's Absolute position and set
     // the relative
     // sensor to match
-    /*absolutePosition = talonOne.getSensorCollection().getPulseWidthPosition();
-
-    // Mask out overflows, keep bottom 12 bits
-    absolutePosition &= 0xFFF;
-
-    if (Constants.kSensorPhase) {
-      absolutePosition *= -1;
-    }
-    if (Constants.kMotorInvert) {
-      absolutePosition *= -1;
-    }*/
+    /*
+     * absolutePosition = talonOne.getSensorCollection().getPulseWidthPosition();
+     * 
+     * // Mask out overflows, keep bottom 12 bits absolutePosition &= 0xFFF;
+     * 
+     * if (Constants.kSensorPhase) { absolutePosition *= -1; } if
+     * (Constants.kMotorInvert) { absolutePosition *= -1; }
+     */
     limitDown = new DigitalInput(1);
     limitUp = new DigitalInput(0);
 
@@ -190,7 +191,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     /* get gamepad stick values */
-
+    int oldGoal = goal;
     double forw = -1 * joyCon.getRawAxis(1); /* positive is forward */
     double turn = -1 * joyCon.getRawAxis(0); /* positive is right */
     double push = +1 * joyCon.getRawAxis(2);
@@ -204,9 +205,9 @@ public class Robot extends TimedRobot {
     boolean btn9 = joyCon.getRawButton(9);
     boolean btn10 = joyCon.getRawButton(10);
     boolean btn11 = joyCon.getRawButton(11);
-    boolean btn12 = joyCon.getRawButton(12); 
+    boolean btn12 = joyCon.getRawButton(12);
     int arm = joyCon.getPOV();
-    int goal = resting;// +skipOffset;
+
     /* deadband gamepad 10% */
     if (Math.abs(forw) < 0.10) {
       forw = 0;
@@ -214,69 +215,45 @@ public class Robot extends TimedRobot {
     if (Math.abs(push) < 0.50) {
       push = 0;
     }
-    /*
-     * if (Math.abs(armUp) < 0.10) { armUp = 0; }
-     */
     if (Math.abs(turn) < 0.10) {
       turn = 0;
     }
-    //handle the arm lifting - check the limit switches first
-    if (!limitUp.get()||!limitDown.get()){
-      talonOne.set(ControlMode.PercentOutput, 0);
-    }
-    else if (arm == 0){
-      talonOne.set(ControlMode.PercentOutput, -.5);
-    }
-    else if (arm==180){
-      talonOne.set(ControlMode.PercentOutput, .5);
-    }
-    else {
-      talonOne.set(ControlMode.PercentOutput, 0);
-    }
     /*
-    else if (!limitUp.get()){//} || !limitDown.get()) {
-      goal=talonOne.getSelectedSensorPosition()+4000;
-    }
-    else if (!limitDown.get()){
-      goal = mCargo;// +skipOffset;
+     * if (arm == 0&&limitUp.get()){ talonOne.set(ControlMode.PercentOutput, .5); }
+     * else if (arm==180&&limitDown.get()){ talonOne.set(ControlMode.PercentOutput,
+     * -.25); } /*else { talonOne.set(ControlMode.PercentOutput, 0); }
+     * 
+     * else
+     */
+    if (!limitUp.get()) { // if we hit the top
+      goal = talonOne.getSelectedSensorPosition() + 100; // go down
+    } else if (!limitDown.get()) { // if we hit the bottom
+      goal = mCargo; // go to middle cargo
+                     // and reset the current position
       talonOne.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-      
-    } else {
-//      hitBottomFlag=false;
-        goal=resting;
+    } else if (arm == 0) {
+      goal++;
+    } else if (arm == 180) {
+      goal--;
+    } else if (btn8)
+      goal = lCargo;// low Cargo
+    else if (btn7)
+      goal = lHatch;// low Hatch
+    else if (btn10)
+      goal = mCargo;// middle cargo
+    else if (btn9)
+      goal = mHatch;// middle hatch
+    else if (btn12)
+      goal = hCargo;// high cargo
+    else if (btn11)
+      goal = hHatch;// high hatch;
+    else if (btn3)
+      goal = 1000;// reset to bottom
 
-      if (btn8)
-        goal = lCargo;// +skipOffset;
-      else if (btn7)
-        goal = lHatch;
-      else if (btn10)
-        goal = mCargo;
-      else if (btn9)
-        goal = mHatch;
-      else if (btn12)
-        goal = hCargo;
-      else if (btn11)
-        goal = hHatch;// +skipOffset;
-      else if (btn3)
-        goal = 1000;
-    }
-    if (limitUp.get()&&limitDown.get()){
-    talonOne.set(ControlMode.Position, goal);
-    }
-    if (++loop == 100) {
-      String _sb = "";
-        _sb += "\terr:";
-        _sb += talonOne.getClosedLoopError(0);
-        _sb += "u"; // Native Units
-        _sb += "\tCurr:";
-        _sb += talonOne.getSelectedSensorPosition(0);
-        _sb += "\ttrg:";
-        _sb += talonOne.getClosedLoopTarget(0);
-        _sb += "u"; /// Native Units
-        loop = 0;
-      System.out.println(_sb);
-    }
-*/
+    if (oldGoal != goal) // if the goal has changed this loop
+      talonOne.set(ControlMode.Position, goal);
+    // }
+
     /* drive robot */
     chassis.arcadeDrive(forw, turn);
     if (btn1)
@@ -292,6 +269,7 @@ public class Robot extends TimedRobot {
       hatch.set(.5);
     else
       hatch.set(0);
+
   }
 
   /**
@@ -300,15 +278,16 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
-  public void updatePositions(int pos){
-    skipOffset = absolutePosition-pos;
-    resting=-1500+skipOffset;
-    lHatch=-3000+skipOffset;
-    mHatch=-5000+skipOffset;
-    hHatch=-6300+skipOffset;
-    lCargo=-4000+skipOffset;
-    mCargo=-2400+skipOffset;
-    hCargo=-2400+skipOffset;
-    
+
+  public void updatePositions(int pos) {
+    skipOffset = absolutePosition - pos;
+    resting = -1500 + skipOffset;
+    lHatch = -3000 + skipOffset;
+    mHatch = -5000 + skipOffset;
+    hHatch = -6300 + skipOffset;
+    lCargo = -4000 + skipOffset;
+    mCargo = -2400 + skipOffset;
+    hCargo = -2400 + skipOffset;
+
   }
 }
